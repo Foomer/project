@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Room',
             fields=[
-                ('number', models.IntegerField(primary_key=True, serialize=False)),
+                ('number', models.IntegerField(unique=True, serialize=False)),
                 ('type', models.CharField(default='Standart', max_length=25)),
                 ('capacity', models.SmallIntegerField()),
                 ('floor', models.IntegerField()),
