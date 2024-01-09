@@ -10,12 +10,12 @@ class RoomService(models.Model):
         ('Cleaning', 'Cleaning'),
         ('Technical', 'Technical'),
     )
-    servicesType = models.CharField(max_length=20, choices=SERVICES_TYPES)
-    createdDate = models.DateField(default=timezone.now)
+    services_type = models.CharField(max_length=20, choices=SERVICES_TYPES)
+    created_date = models.DateField(default=timezone.now)
     price = models.FloatField()
-    note = models.TextField()
+    note = models.TextField(blank=True)
     
     def __str__(self) -> str:
-        return f'{self.room.number}-{self.servicesType}'
+        return f'{self.room.number}-{self.services_type}'
 
     

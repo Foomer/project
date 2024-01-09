@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from hotels.models import Room,Guest,Reservation
+from hotels.models import Room,Guest,Reservation,RoomService,Event,EventAttendees
 
 class RoomSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,3 +20,26 @@ class ReservationSerializer(serializers.ModelSerializer):
 class ReservationViewSerializer(ReservationSerializer):
     room = RoomSerializer()
     guest = GuestSerializer(many=True)
+    
+class RoomServiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RoomService
+        fields=['id','room','services_type','created_date','price','note']
+        
+class RoomServiceViewSerializer(RoomServiceSerializer):
+    room = RoomSerializer()
+    
+class EventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = ['id','eventType','location','startDate','endDate','note','price']
+        
+class EventAttendeesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventAttendees
+        fields = ['id','event','numberOfDependees','guest']
+        
+class EventAttendeesViewSerializer(EventAttendeesSerializer):
+    event = EventSerializer()
+    guest = GuestSerializer()
+        
