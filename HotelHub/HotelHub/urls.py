@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
 
-from hotels.viewsets import RoomViewSet,GuestViewSet,ReservationViewSet,EventViewSet,EventAttendeesViewSet
+from hotels.viewsets import RoomViewSet,GuestViewSet,ReservationViewSet,EventViewSet,EventAttendeesViewSet,FolioPostingViewSet,FolioViewSet,PaymentViewSet
 
 router = routers.DefaultRouter()
 router.register('rooms', RoomViewSet)
@@ -26,6 +26,9 @@ router.register('guests',GuestViewSet)
 router.register('reservations',ReservationViewSet)
 router.register('event',EventViewSet)
 router.register('event_attendees',EventAttendeesViewSet)
+router.register('folio',FolioViewSet)
+router.register('folio_posting',FolioPostingViewSet)
+router.register('payments',PaymentViewSet)
  
 urlpatterns = [
     path('admin/', admin.site.urls),

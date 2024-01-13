@@ -5,6 +5,7 @@ from .event import Event
 from .event_attendees import EventAttendees
 from .folio import Folio
 from .folio_posting import FolioPosting
+from .pyment import Payment
 
 __all__=[
     'Guest',
@@ -14,5 +15,6 @@ __all__=[
     'EventAttendees',
     'Folio',
     'FolioPosting',
+    'Payment'
     
 ]

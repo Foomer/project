@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from hotels.models import Room,Guest,Reservation,Event,EventAttendees
+from hotels.models import Room,Guest,Reservation,Event,EventAttendees,Folio,FolioPosting,Payment
 
 class RoomSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,4 +36,25 @@ class EventAttendeesSerializer(serializers.ModelSerializer):
 class EventAttendeesViewSerializer(EventAttendeesSerializer):
     event = EventSerializer()
     guest = GuestSerializer()
+    
         
+class FolioPostingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FolioPosting
+        fields = ['id','folio','amount','department','note']    
+        
+            
+class FolioSerializer(serializers.ModelSerializer):
+    guest = GuestSerializer()
+    folio_postings = FolioPostingSerializer(many=True)
+    class Meta:
+        model = Folio
+        fields = ['id','guest','folio_postings']        
+        
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = ['id','folio','type','amount','note']
+        
+class PaymentViewSerializer(PaymentSerializer):
+    folio = FolioSerializer()

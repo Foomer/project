@@ -1,8 +1,9 @@
 from rest_framework import viewsets
 
 from hotels.serializers import RoomSerializer,GuestSerializer,ReservationSerializer,ReservationViewSerializer,\
-    EventSerializer,EventAttendeesViewSerializer,EventAttendeesSerializer
-from hotels.models import Room,Guest,Reservation,Event,EventAttendees
+    EventSerializer,EventAttendeesViewSerializer,EventAttendeesSerializer,FolioSerializer,FolioPostingSerializer,PaymentSerializer,PaymentViewSerializer
+    
+from hotels.models import Room,Guest,Reservation,Event,EventAttendees,Folio,FolioPosting,Payment
 
 
 class RoomViewSet(viewsets.ModelViewSet):
@@ -34,3 +35,20 @@ class EventAttendeesViewSet(viewsets.ModelViewSet):
             return EventAttendeesViewSerializer
         else:
             return EventAttendeesSerializer
+        
+
+class FolioViewSet(viewsets.ModelViewSet):
+    queryset = Folio.objects.all()
+    serializer_class = FolioSerializer
+    
+class FolioPostingViewSet(viewsets.ModelViewSet):
+    queryset = FolioPosting.objects.all()
+    serializer_class = FolioPostingSerializer
+    
+class PaymentViewSet(viewsets.ModelViewSet):
+    queryset = Payment.objects.all()
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return PaymentViewSerializer
+        else:
+            return PaymentSerializer
