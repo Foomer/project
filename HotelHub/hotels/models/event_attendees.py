@@ -4,7 +4,7 @@ from hotels.models import Event,Guest
 
 class EventAttendees(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    numberOfDependees = models.IntegerField(default=0)
+    number_of_dependees = models.IntegerField(default=0)
     guest = models.ForeignKey(Guest,null=True, on_delete=models.CASCADE)
 
     def __str__(self):

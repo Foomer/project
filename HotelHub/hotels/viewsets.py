@@ -1,8 +1,8 @@
 from rest_framework import viewsets
 
-from hotels.serializers import RoomSerializer,GuestSerializer,ReservationSerializer,ReservationViewSerializer,RoomServiceSerializer,\
-    RoomServiceViewSerializer,EventSerializer,EventAttendeesViewSerializer,EventAttendeesSerializer
-from hotels.models import Room,Guest,Reservation,RoomService,Event,EventAttendees
+from hotels.serializers import RoomSerializer,GuestSerializer,ReservationSerializer,ReservationViewSerializer,\
+    EventSerializer,EventAttendeesViewSerializer,EventAttendeesSerializer
+from hotels.models import Room,Guest,Reservation,Event,EventAttendees
 
 
 class RoomViewSet(viewsets.ModelViewSet):
@@ -22,14 +22,6 @@ class ReservationViewSet(viewsets.ModelViewSet):
         else:
             return ReservationSerializer
         
-class RoomServiceViewSet(viewsets.ModelViewSet):
-    queryset = RoomService.objects.all()
-    
-    def get_serializer_class(self):
-        if self.request.method == 'GET':
-            return RoomServiceViewSerializer
-        else:
-            return RoomServiceSerializer
         
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()

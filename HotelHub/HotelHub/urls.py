@@ -18,13 +18,12 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
 
-from hotels.viewsets import RoomViewSet,GuestViewSet,ReservationViewSet,RoomServiceViewSet,EventViewSet,EventAttendeesViewSet
+from hotels.viewsets import RoomViewSet,GuestViewSet,ReservationViewSet,EventViewSet,EventAttendeesViewSet
 
 router = routers.DefaultRouter()
 router.register('rooms', RoomViewSet)
 router.register('guests',GuestViewSet)
 router.register('reservations',ReservationViewSet)
-router.register('room_service',RoomServiceViewSet)
 router.register('event',EventViewSet)
 router.register('event_attendees',EventAttendeesViewSet)
  
