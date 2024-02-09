@@ -2,8 +2,10 @@ from django.db import models
 
 
 from hotels.models.guest import Guest
+from django.contrib.auth.models import User
 
 class Folio(models.Model):
+    user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
     guest = models.ForeignKey(Guest,on_delete=models.CASCADE)
     folio_postings = models.ManyToManyField('hotels.FolioPosting', related_name='folio_postings',blank=True)
     payment = models.ManyToManyField('hotels.Payment',blank=True, related_name='folios')

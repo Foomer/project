@@ -1,7 +1,8 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 
 class Room(models.Model):
+    user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
     number = models.IntegerField(primary_key=True)
     type = models.CharField(max_length=25,default='Standart')
     capacity = models.SmallIntegerField()

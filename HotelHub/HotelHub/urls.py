@@ -17,6 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
+from django.contrib.auth.views import LogoutView
+from rest_framework.authtoken.views import obtain_auth_token
+from hotels.views import registration_view
 
 from hotels.viewsets import RoomViewSet,GuestViewSet,ReservationViewSet,EventViewSet,EventAttendeesViewSet,FolioPostingViewSet,FolioViewSet,PaymentViewSet
 
@@ -32,6 +35,8 @@ router.register('payments',PaymentViewSet)
  
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-auth/',include('rest_framework.urls', namespace='rest_framework')),
-    path('api/',include(router.urls))
+    path('api/auth/',obtain_auth_token),
+    path('api/',include(router.urls)),
+    path("api/register/", registration_view),
+    path("logout", LogoutView.as_view()),
 ]

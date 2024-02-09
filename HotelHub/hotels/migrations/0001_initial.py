@@ -25,6 +25,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Room',
             fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('number', models.IntegerField(unique=True, serialize=False)),
                 ('type', models.CharField(default='Standart', max_length=25)),
                 ('capacity', models.SmallIntegerField()),

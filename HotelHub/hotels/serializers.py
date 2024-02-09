@@ -2,10 +2,16 @@ from rest_framework import serializers
 
 from hotels.models import Room,Guest,Reservation,Event,EventAttendees,Folio,FolioPosting,Payment
 
+from rest_framework.authtoken.models import Token
+from django.contrib.auth.models import User
+
+
 class RoomSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    
     class Meta:
         model=Room
-        fields=['number','type','capacity','floor','description','price_per_night']
+        fields=["user",'number','type','capacity','floor','description','price_per_night']
         
 class GuestSerializer(serializers.ModelSerializer):
     class Meta:
@@ -58,3 +64,19 @@ class PaymentSerializer(serializers.ModelSerializer):
         
 class PaymentViewSerializer(PaymentSerializer):
     folio = FolioSerializer()
+    
+
+class RegistrationSerializer(serializers.ModelSerializer):
+    token = serializers.SerializerMethodField(read_only=True)
+
+    def get_token(self, user):
+        token, _ = Token.objects.get_or_create(user=user)
+        return token.key
+
+    class Meta:
+        model = User
+        fields = ("username", "password", "token")
+        
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        return user

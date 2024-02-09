@@ -10,6 +10,10 @@ class RoomViewSet(viewsets.ModelViewSet):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
     
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)
+    
+    
 class GuestViewSet(viewsets.ModelViewSet):
     queryset=Guest.objects.all()
     serializer_class = GuestSerializer
