@@ -9,6 +9,7 @@ class Room(models.Model):
     floor = models.IntegerField()
     description = models.TextField()
     price_per_night = models.FloatField()
+    check_in = models.BooleanField(default=False)
     
     def __str__(self) -> str:
         return f'{self.number}-{self.type}'

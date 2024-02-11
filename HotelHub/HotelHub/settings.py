@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+from datetime import timedelta
 import os
 from pathlib import Path
 from dotenv import load_dotenv
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'hotels',
     'rest_framework',
     'rest_framework.authtoken',
+    "celery",
 ]
 
 MIDDLEWARE = [
@@ -141,4 +143,13 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ]
+}
+
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
+
+CELERY_BEAT_SCHEDULE = {
+     'every_day': {
+        'task': 'hotels.tasks.clear_old_reservations',
+        "schedule": 1.0,
+    },
 }

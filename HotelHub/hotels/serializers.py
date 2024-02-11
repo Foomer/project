@@ -11,17 +11,20 @@ class RoomSerializer(serializers.ModelSerializer):
     
     class Meta:
         model=Room
-        fields=["user",'number','type','capacity','floor','description','price_per_night']
+        fields=["user",'number','type','capacity','floor','description','price_per_night','check_in']
         
 class GuestSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    
     class Meta:
         model = Guest
-        fields=['id','first_name','middle_name','last_name','email','phone']
+        fields=['id',"user",'first_name','middle_name','last_name','email','phone']
         
 class ReservationSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
         model = Reservation
-        fields=['id','check_in_date','check_out_date','room','guest']
+        fields=['id',"user",'check_in_date','check_out_date','room','guest']
         
 class ReservationViewSerializer(ReservationSerializer):
     room = RoomSerializer()
@@ -29,15 +32,17 @@ class ReservationViewSerializer(ReservationSerializer):
     
     
 class EventSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
         model = Event
-        fields = ['id','event_type','location','start_date','end_date','note','price']
+        fields = ['id',"user",'event_type','location','start_date','end_date','note','price']
    
         
 class EventAttendeesSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
         model = EventAttendees
-        fields = ['id','event','number_of_dependees','guest']
+        fields = ['id',"user",'event','number_of_dependees','guest']
         
 class EventAttendeesViewSerializer(EventAttendeesSerializer):
     event = EventSerializer()
@@ -45,22 +50,25 @@ class EventAttendeesViewSerializer(EventAttendeesSerializer):
     
         
 class FolioPostingSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
         model = FolioPosting
-        fields = ['id','folio','amount','department','note']    
+        fields = ['id',"user",'folio','amount','department','note']    
         
             
 class FolioSerializer(serializers.ModelSerializer):
     guest = GuestSerializer()
     folio_postings = FolioPostingSerializer(many=True)
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
         model = Folio
-        fields = ['id','guest','folio_postings']        
+        fields = ['id',"user",'guest','folio_postings']        
         
 class PaymentSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
         model = Payment
-        fields = ['id','folio','type','amount','note']
+        fields = ['id',"user",'folio','type','amount','note']
         
 class PaymentViewSerializer(PaymentSerializer):
     folio = FolioSerializer()
