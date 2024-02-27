@@ -45,6 +45,15 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     "celery",
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    
+    'allauth.socialaccount.providers.google',
+    
+    'rest_framework_swagger',
+    'drf_yasg',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -55,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'HotelHub.urls'
@@ -142,7 +152,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
-    ]
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
 
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
@@ -150,6 +161,33 @@ CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
 CELERY_BEAT_SCHEDULE = {
      'every_day': {
         'task': 'hotels.tasks.clear_old_reservations',
-        "schedule": 1.0,
+        "schedule": 10.0,
     },
 }
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+            'https://www.googleapis.com/auth/spreadsheets',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'offline',
+        },
+        },
+}
+
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+SOCIALACCOUNT_STORE_TOKENS = True,
+
+SITE_ID = 2

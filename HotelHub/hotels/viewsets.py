@@ -5,10 +5,13 @@ from hotels.serializers import RoomSerializer,GuestSerializer,ReservationSeriali
     
 from hotels.models import Room,Guest,Reservation,Event,EventAttendees,Folio,FolioPosting,Payment
 
+from django_filters.rest_framework import DjangoFilterBackend
 
 class RoomViewSet(viewsets.ModelViewSet):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['number','type']
     
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
@@ -17,6 +20,8 @@ class RoomViewSet(viewsets.ModelViewSet):
 class GuestViewSet(viewsets.ModelViewSet):
     queryset=Guest.objects.all()
     serializer_class = GuestSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['first_name','last_name']
     
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)

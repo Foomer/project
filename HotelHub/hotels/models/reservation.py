@@ -14,6 +14,7 @@ class Reservation(models.Model):
         if Reservation.objects.filter(room=self.room).filter(check_in_date__lte=self.check_out_date).filter(check_out_date__gte=self.check_in_date).exists():
             raise ValidationError('This reservation conflicts with existing reservations for this room.')
         super().save(*args, **kwargs)
+        
     def __str__(self) -> str:
         guest_name = ', '.join([guest.first_name for guest in self.guest.all()])
         return f'Reservation for {guest_name} in {self.room.number} from {self.check_in_date} to {self.check_out_date}'

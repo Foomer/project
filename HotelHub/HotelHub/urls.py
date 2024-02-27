@@ -20,6 +20,10 @@ from rest_framework import routers
 from django.contrib.auth.views import LogoutView
 from rest_framework.authtoken.views import obtain_auth_token
 from hotels.views import registration_view
+from django.views.generic import TemplateView
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework import permissions
 
 from hotels.viewsets import RoomViewSet,GuestViewSet,ReservationViewSet,EventViewSet,EventAttendeesViewSet,FolioPostingViewSet,FolioViewSet,PaymentViewSet
 
@@ -32,11 +36,28 @@ router.register('event_attendees',EventAttendeesViewSet)
 router.register('folio',FolioViewSet)
 router.register('folio_posting',FolioPostingViewSet)
 router.register('payments',PaymentViewSet)
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Store API",
+      default_version='v1',
+      description="Test description",
+      terms_of_service="https://www.google.com/policies/terms/",
+      contact=openapi.Contact(email="contact@snippets.local"),
+      license=openapi.License(name="BSD License"),
+   ),
+   public=True,
+   permission_classes=[permissions.AllowAny],
+)
  
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/auth/',obtain_auth_token),
     path('api/',include(router.urls)),
     path("api/register/", registration_view),
+    path("accounts/", include("allauth.urls")),
     path("logout", LogoutView.as_view()),
-]
+    path("", TemplateView.as_view(template_name="index.html")),
+    path('api/swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path('api/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    ]
