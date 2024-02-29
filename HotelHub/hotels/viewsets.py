@@ -35,6 +35,9 @@ class ReservationViewSet(viewsets.ModelViewSet):
         else:
             return ReservationSerializer
         
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['guest']
+        
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
         
@@ -61,6 +64,10 @@ class EventAttendeesViewSet(viewsets.ModelViewSet):
 class FolioViewSet(viewsets.ModelViewSet):
     queryset = Folio.objects.all()
     serializer_class = FolioSerializer
+    
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['guest']
+    
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
     

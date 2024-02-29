@@ -24,6 +24,8 @@ from django.views.generic import TemplateView
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
+from graphene_django.views import GraphQLView
+
 
 from hotels.viewsets import RoomViewSet,GuestViewSet,ReservationViewSet,EventViewSet,EventAttendeesViewSet,FolioPostingViewSet,FolioViewSet,PaymentViewSet
 
@@ -60,4 +62,5 @@ urlpatterns = [
     path("", TemplateView.as_view(template_name="index.html")),
     path('api/swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('api/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path("graphql", GraphQLView.as_view(graphiql=True)),
     ]

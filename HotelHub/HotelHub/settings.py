@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'drf_yasg',
     'django_filters',
+    
+    "graphene_django"
 ]
 
 MIDDLEWARE = [
@@ -191,3 +193,8 @@ LOGOUT_REDIRECT_URL = '/'
 SOCIALACCOUNT_STORE_TOKENS = True,
 
 SITE_ID = 2
+
+
+GRAPHENE = {
+    "SCHEMA": "HotelHub.schema.schema"
+}

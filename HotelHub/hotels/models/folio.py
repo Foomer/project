@@ -1,6 +1,5 @@
 from django.db import models
 
-
 from hotels.models.guest import Guest
 from django.contrib.auth.models import User
 
