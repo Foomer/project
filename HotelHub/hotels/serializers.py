@@ -48,6 +48,7 @@ class EventAttendeesViewSerializer(EventAttendeesSerializer):
     event = EventSerializer()
     guest = GuestSerializer()
     
+    
         
 class FolioPostingSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
